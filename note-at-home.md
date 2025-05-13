@@ -260,3 +260,42 @@ $$
 * Splitted beams are projective: Orthogonality along the same axis orthogonal.
 * Zero expectation on perpendicular axis
 
+## Trace Norm Algebra
+### Singular(Non-negative) Value Decompostion
+For **every** matrix $A\in\mathbb C^{m\times n}$ **(real or complex, square or rectangular)** there are
+
+* a unitary $U\in\mathbb C^{m\times m}$
+* a unitary $V\in\mathbb C^{n\times n}$
+* a diagonal matrix $\Sigma\in\mathbb R^{m\times n}$ whose only non-zero entries are non-negative numbers
+  $\sigma_1\ge\sigma_2\ge\dots\ge\sigma_r>0$ on its main diagonal ($r=\operatorname{rank}A$)
+
+such that
+$$
+A \;=\; U\,\Sigma\,V^{\dagger}.
+$$
+💡🤩 **Meanwhile $A$ is a generic matrix, $A^{\dagger}A$ is an $n\times n$ Hermitian, positive-semidefinite matrix.**
+
+$$\begin{array}{}
+V^{\dagger}(A^{\dagger}A)V = \Lambda
+            = \operatorname{diag}\!\bigl(\sigma_1^{2},\dots,\sigma_n^{2}\bigr), 
+\\
+ (V^{\dagger}A^{\dagger}U )( U^{\dagger}AV)= \sqrt\Lambda \sqrt\Lambda = \Sigma \Sigma = \Sigma^{\dagger} \Sigma = \operatorname{diag}\!\bigl(|\sigma_1|,\dots,|\sigma_n|\bigr)^2
+\end{array}
+$$
+It is a good guess that $\Sigma = U^{\dagger}AV $. Let's verify if it indeed is true. 
+
+$U \Sigma = U U^{\dagger}AV \Rightarrow U = AV \Sigma^{-1} \Rightarrow U \Sigma V^{\dagger} = A V \Sigma^{-1}\Sigma V^{\dagger} = A.$
+#### Example: square vs rectangular case
+
+1️⃣ If $A$ is square (e.g., $2 \times 2$):
+
+* SVD gives $A = U \Sigma V^\dagger$ with $\Sigma$ diagonal $2 \times 2$, nonnegative singular values.
+* Eigenvalue diagonalisation (if possible) gives $A = S D S^{-1}$ with $D$ diagonal, possibly complex eigenvalues (can be negative or even nonreal).
+
+2️⃣ If $A$ is rectangular (e.g., $3 \times 2$):
+
+* Only SVD applies; there’s **no** eigenvalue diagonalisation.
+* $\Sigma$ will be a $3 \times 2$ diagonal matrix with zeros off the main diagonal, nonnegative entries.
+
+
+
