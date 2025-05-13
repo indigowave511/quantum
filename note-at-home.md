@@ -296,6 +296,109 @@ $U \Sigma = U U^{\dagger}AV \Rightarrow U = AV \Sigma^{-1} \Rightarrow U \Sigma 
 
 * Only SVD applies; there’s **no** eigenvalue diagonalisation.
 * $\Sigma$ will be a $3 \times 2$ diagonal matrix with zeros off the main diagonal, nonnegative entries.
+---
+## No Cloning Theorem
+Show that for two non-orthogonal pure qubit states
+
+$$
+\rho = |\psi\rangle\!\langle\psi|,\qquad
+\sigma = |\phi\rangle\!\langle\phi|,\qquad
+0 < s:=|\langle\psi|\phi\rangle| < 1,
+$$
+
+the trace distance **increases** if an ideal cloner $\rho\mapsto\rho^{\otimes 2}$ is applied to both inputs:
+
+$$
+D(\rho^{\otimes 2},\sigma^{\otimes 2}) \;>\; D(\rho,\sigma).
+$$
+---
+Proof: 
+For any kets $|\psi\rangle,|\phi\rangle$ the trace distance is
+
+$$
+\boxed{\;D\bigl(|\psi\rangle,|\phi\rangle\bigr)
+      =\sqrt{1-\bigl|\langle\psi|\phi\rangle\bigr|^{2}}\;} .
+$$
+
+In the basis $\{|e_1\rangle=|\psi\rangle,\;|e_2\rangle\}$ with
+$|\phi\rangle = s|e_1\rangle+\sqrt{1-s^{2}}\,|e_2\rangle$,
+the matrix $\rho-\sigma$ has eigenvalues $\pm\sqrt{1-s^{2}}$;
+the trace norm $||\rho-\sigma||_1$ is twice that number, and
+$D=\tfrac12||\rho-\sigma||_1=\sqrt{1-s^{2}}$.
 
 
+  Let
+   $|u\rangle:=|\psi\psi\rangle,\;|v\rangle:=|\phi\phi\rangle$.
+   Because $|u\rangle$ and $|v\rangle$ are generally not parallel but lie in the huge $4$-qubit Hilbert space, the span $\mathcal S=\operatorname{span}\{|u\rangle,|v\rangle\}$ is at most 2-D.
+   Outside $\mathcal S$ both projectors act as zero, so the spectrum of
+   $\Delta=\rho^{\otimes2}-\sigma^{\otimes2}$ is completely determined by its $2\times2$ representation on $\mathcal S$.
+
+  Concretely, choose an orthonormal basis of $\mathcal S$:
+
+   $$
+     |e_1\rangle := |u\rangle, \qquad
+     |e_2\rangle := \frac{|v\rangle-\alpha|u\rangle}{\sqrt{1-\alpha^{2}}},
+     \quad\text{with}\;
+     \alpha:=\langle u|v\rangle=s^{2}\in(0,1).
+   $$
+
+In this basis
+
+   $$
+     \rho^{\otimes2}=
+     \begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+     \sigma^{\otimes2}=
+     \begin{pmatrix}\alpha^{2}&\alpha\sqrt{1-\alpha^{2}}\\
+                     \alpha\sqrt{1-\alpha^{2}}&1-\alpha^{2}\end{pmatrix}.
+   $$
+
+**Compute the eigenvalues in that $2\times2$ block.**
+
+   $$
+     \Delta = \rho^{\otimes2}-\sigma^{\otimes2}
+            =\begin{pmatrix}
+                 1-\alpha^{2} & -\alpha\sqrt{1-\alpha^{2}}\\
+                 -\alpha\sqrt{1-\alpha^{2}} & -\!(1-\alpha^{2})
+              \end{pmatrix}.
+   $$
+Its eigenvalues are easily found to be $\pm\sqrt{1-\alpha^{2}}$.
+   (Check: the trace is zero, the determinant is $-\!(1-\alpha^{2})$.)
+
+**Trace norm and trace distance.**
+   The trace norm is twice the positive eigenvalue:
+
+   $$
+      \|\Delta\|_{1}=2\sqrt{1-\alpha^{2}},
+      \qquad
+      D(\rho^{\otimes2},\sigma^{\otimes2})
+        =\tfrac12\|\Delta\|_{1}
+        =\sqrt{1-\alpha^{2}}
+        =\sqrt{1-s^{4}}.
+   $$
+
+5. **Compare with the single-copy distance.**
+   Before cloning, $D(\rho,\sigma)=\sqrt{1-s^{2}}$.
+   Because $0<s<1\Rightarrow s^{4}<s^{2}$, we indeed have
+
+   $$
+     \sqrt{1-s^{4}}\;>\;\sqrt{1-s^{2}}.
+   $$
+
+
+---
+#### Assume a universal cloner exists then compute how far *apart* the ideal clones would be
+$$
+\begin{aligned}
+D(\rho,\sigma)          &=\sqrt{1-s^{2}},\\[4pt]
+D(\rho\otimes\rho,\;\sigma\otimes\sigma)
+                         &=\sqrt{1-s^{4}}
+                          =\sqrt{1-(s^{2})^{2}}\;>\;\sqrt{1-s^{2}}
+                          =D(\rho,\sigma).
+\end{aligned}
+$$
+Once the maximum discrimination was the trace norm $D(\rho,\sigma)$, no other operator trace norm can not be greater than this.
+
+Therefore, hypothetical cloner violates the maximality of discrimination.∎
+
+---
 
