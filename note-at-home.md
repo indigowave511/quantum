@@ -401,4 +401,64 @@ Once the maximum discrimination was the trace norm $D(\rho,\sigma)$, no other op
 Therefore, hypothetical cloner violates the maximality of discrimination.∎
 
 ---
+## Schmidt Decomposition(To measure degree of entanglement)
+
+Let $\mathcal H_A$ and $\mathcal H_B$ be finite-dimensional Hilbert spaces with dimensions $d_A$ and $d_B$.
+For **every *normalised* bipartite pure state**
+
+$$
+\lvert\psi\rangle\in\mathcal H_A\otimes\mathcal H_B,\qquad
+\langle\psi\vert\psi\rangle=1,
+$$
+
+there exist
+
+* non-negative real numbers (Schmidt coefficients) $\{\lambda_k\}_{k=1}^{r}$ satisfying $\sum_{k=1}^{r}\lambda_k^{2}=1$
+
+* orthonormal sets $\{\lvert u_k\rangle\}_{k=1}^{r}\subset\mathcal H_A$ and $\{\lvert v_k\rangle\}_{k=1}^{r}\subset\mathcal H_B$,
+
+such that
+
+$$
+\boxed{\;
+\lvert\psi\rangle=\sum_{k=1}^{r}\lambda_k\,\lvert u_k\rangle\otimes\lvert v_k\rangle
+\;}
+$$
+
+where $r=\operatorname{rank}(\psi)\le\min(d_A,d_B)$ is the **Schmidt rank**.
+The set $\{\lambda_k\}$ and $r$ are unique (up to degeneracy-phase conventions).
+
+Proof: 
+
+* Write $\lvert\psi\rangle = \sum_{i=1}^{d_A}\sum_{j=1}^{d_B} C_{ij}\lvert i\rangle_A\otimes\lvert j\rangle_B$ in chosen product bases.
+
+* View the coefficients $C$ as a $d_A\times d_B$ matrix.
+Perform an SVD: $C = U\Lambda V^\dagger$ with diagonal $\Lambda=\mathrm{diag}(\lambda_1,\dots,\lambda_r)$.
+* Defining $\lvert u_k\rangle=\sum_i U_{ik}\lvert i\rangle_A$ and $\lvert v_k\rangle=\sum_j V^{*}_{jk}\lvert j\rangle_B$ yields the boxed form above.
+
+#### Key properties
+
+| Quantity                             | Meaning                                                                                                                                 |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Schmidt coefficients** $\lambda_k$ | “Weights’’ of each correlated pair; invariant under local unitaries.                                                                    |
+| **Schmidt rank** $r$                 | Minimum number of product terms; $r=1$ ⇔ state is *separable*.                                                                          |
+| **Reduced states**                   | $\rho_A=\operatorname{Tr}_B\lvert\psi\rangle\langle\psi\rvert=\sum_k\lambda_k^2\lvert u_k\rangle\langle u_k\rvert$ (similarly for $B$). |
+| **Entropy of entanglement**          | $S(\rho_A)= -\sum_k\lambda_k^2\log\lambda_k^2$.                                                                                         |
+| **Contracted overlaps**              | Inner product of two pure states equals the dot product of their Schmidt vectors $(\lambda_k)$.                                         |
+
+---
+
+#### Examples:
+
+1. **Bell state**
+
+   $$
+   \lvert\Phi^+\rangle=\tfrac1{\sqrt2}\bigl(\lvert00\rangle+\lvert11\rangle\bigr)
+   =\sum_{k=1}^{2}\tfrac1{\sqrt2}\,\lvert k\rangle\!\_A\otimes\lvert k\rangle\!\_B .
+   $$
+
+   Schmidt coefficients $\lambda_{1,2}=1/\sqrt2$; rank $r=2$ ⇒ maximally entangled (entropy = 1 bit).
+
+2. **Product state**
+   $\lvert\psi\rangle=\lvert0\rangle_A\otimes(\alpha\lvert0\rangle+\beta\lvert1\rangle)_B$ has one non-zero coefficient ($\lambda_1=1$), hence $r=1$ and no entanglement.
 
