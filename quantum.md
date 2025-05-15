@@ -1,9 +1,6 @@
 # Quantum Information Study Note
 ## John's Vector and Spinor
 
-
-
-
 Vertically polarized EM wave is transverse, $E^y(t,x,y,z) = E^y(t,z) = A^y \cos(\omega t - k z + \phi)$. 
 
 $k\over 2\pi$: density  in space
@@ -259,6 +256,207 @@ $$
 * Beam split
 * Splitted beams are projective: Orthogonality along the same axis orthogonal.
 * Zero expectation on perpendicular axis
+
+## Quantum Discrimination
+
+
+* **Alice** prepares one of two known pure states:
+
+  $$
+  |0\rangle \quad (\text{label } L_0) \quad \text{or} \quad |\Psi\rangle = \psi_0 |0\rangle + \psi_1 |1\rangle \quad (\text{label } L_\Psi)
+  $$
+, where
+$$
+|0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad |\Psi\rangle = \begin{bmatrix} \psi_0 \\ \psi_1 \end{bmatrix}
+$$
+with $|\psi_0|^2 + |\psi_1|^2 = 1$.
+
+For $|0\rangle$:
+$$
+\rho_0 = |0\rangle \langle 0| = \begin{bmatrix} 1 \\ 0 \end{bmatrix} \begin{bmatrix} 1 & 0 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}
+$$
+For $|\Psi\rangle = \psi_0 |0\rangle + \psi_1 |1\rangle$:
+$$
+\rho_\Psi = |\Psi\rangle \langle \Psi| = \begin{bmatrix} \psi_0 \\ \psi_1 \end{bmatrix} \begin{bmatrix} \psi_0^* & \psi_1^* \end{bmatrix} = \begin{bmatrix} |\psi_0|^2 & \psi_0 \psi_1^* \\ \psi_0^* \psi_1 & |\psi_1|^2 \end{bmatrix}
+$$
+
+* **Alice** makes probabilistic arrangement of two states:
+$$
+ q_0 |0\rangle + q_1 |\Psi\rangle, \quad \text{where } q_0 + q_1 = 1
+$$
+Bob has to do to **specify the labels $L_0$ and $L_\Psi$** when trying to discriminate Alice’s two states.
+
+* **Bob** knows:
+
+  * The exact definitions of $|0\rangle$ and $|\Psi\rangle$ as well as $q_0$ and $q_1$.
+  * His goal: when he gets a quantum system from Alice, perform a **measurement** whose result lets him assign the correct label.
+
+---
+
+### What Bob Needs to Do
+
+Bob must design a measurement that gives him **information** to tell apart the two states.
+
+There are two approaches:
+
+---
+
+#### (1) **Projective Measurement**
+
+* Bob picks two basis $\{ |X_0\rangle, |X_\Psi\rangle \}$ such that:
+
+  * $|X_0\rangle$ is the direction “most aligned” to $|0\rangle$.
+  * $|X_\Psi\rangle$ is the direction “most aligned” to $|\Psi\rangle$.
+
+* He builds projectors to "perfectly" discriminate the lables:
+
+  $$
+  \Pi_0 = |X_0\rangle \langle X_0|, \quad \Pi_\Psi = |X_\Psi\rangle \langle X_\Psi|
+  $$
+🔸 There are photons from $\Psi$ label to be detected on $\Pi_0$, aren't there?  
+✅ However, when Bob receives a quantum state:
+
+* Apply the measurement $\{ \Pi_0, \Pi_\Psi \}$.
+* If outcome = $\Pi_0$, **guess label $L_0$**.
+* If outcome = $\Pi_\Psi$, **guess label $L_\Psi$**.
+
+There are photons that **do not match** either projection.
+$$
+\Pi_{\perp} = I - \Pi_0 - \Pi_\Psi
+$$
+This represents the **“lost” events** — photons that:
+* Are absorbed,
+* Pass through undetected,
+* Or get scattered into unmeasured directions.
+
+
+---
+
+#### (2) **Optimal POVM (Helstrom Measurement)**
+
+* For **minimum error discrimination**, the mathematically optimal approach is:
+
+  * Calculate the Helstrom projector onto the **positive part** of $\rho_0 - \rho_\Psi$ (the difference of density matrices).
+
+This gives:
+
+* $E_0$ (positive outcome region) → assign $L_0$.
+* $E_\Psi$ (negative outcome region) → assign $L_\Psi$.
+
+This strategy **maximizes the probability** of correct labeling.
+
+✅ If the overlap $|\langle 0 | \Psi \rangle| \neq 0$, it means there’s **nonzero confusion**, but the optimal measurement minimizes this error.
+ 
+✅ Perfect overlap: $|\langle 0 | \Psi \rangle| = 1$.  This only happens if:
+$$
+|\Psi\rangle = e^{i\phi} |0\rangle
+$$
+That is, the states are **identical up to a global phase**.
+
+* Bob **cannot** tell the difference.
+* No measurement can help.
+* His best bet is to **guess randomly**, with success probability $\frac{1}{2}$.
+
+This is the **maximum possible confusion** case.
+
+✅ Zero overlap $|\langle 0 | \Psi \rangle| = 0$.
+$$
+|\Psi\rangle = |1\rangle
+$$
+That is, the states are **orthogonal**.
+
+* Bob can perfectly discriminate them.
+* He can apply the projective measurement(1) $\{|0\rangle, |1\rangle\}$.
+* He can also apply Helstrom Measurment, where success probability = 1.
+
+Let's see why the last is true. 
+
+Bob's measurement basis in general:
+$$
+|X\rangle = \begin{bmatrix} a \\ b \end{bmatrix}, \quad \text{with} \quad |a|^2 + |b|^2 = 1
+$$
+and the corresponding **projector**:
+$$
+\Pi_X = |X\rangle \langle X| = \begin{bmatrix} a \\ b \end{bmatrix} \begin{bmatrix} a^* & b^* \end{bmatrix} = \begin{bmatrix} |a|^2 & a b^* \\ a^* b & |b|^2 \end{bmatrix}
+$$
+✅ $\det{\Pi_X} = 0$, since **factorized matrix determinant is zero**.
+$$
+\begin{aligned}
+1
+&=\Pr(\text{send }0)\;
+                 [\Pr(\text{outcome }0 \mid \text{send }0) + \Pr(\text{outcome }\Psi \mid \text{send }0)]\\[2pt]
+&\quad + \Pr(\text{send }\Psi)\;
+                 [\Pr(\text{outcome }0 \mid \text{send }\Psi) + \Pr(\text{outcome }\Psi \mid \text{send }\Psi)]\\[2pt]
+\end{aligned}
+$$ 
+The probability for Bob's correct labels:
+$$
+\begin{aligned}
+P_{\text{succ}}
+&=\sum_{k\in\{0, \Psi\}}\Pr(\text{send }k)\;
+                 \Pr(\text{outcome }k \mid \text{send }k) \\[2pt]
+&=\sum_{k\in\{0, \Psi\}}q_k \langle \Psi_k \mid X_k \rangle \langle X_k \mid \Psi_k \rangle \\
+&=\sum_{k\in\{0, \Psi\}}q_k \operatorname{Tr}(\rho_k \Pi_k).
+\end{aligned}
+$$
+If Bob's measurement basis($\Pi := \Pi_X$) is complete(,which is not the case in projective discrimination), 
+$$
+\Pi + \Pi_{\bot} = \mid X \rangle \langle X \mid + \mid X_{\bot} \rangle \langle X_{\bot} \mid = I  
+$$
+$$
+\begin{aligned}
+P_{\text{succ}}
+&=q_\Psi \operatorname{Tr}(\rho_\Psi) + \operatorname{Tr}([q_0\rho_0 - q_\Psi \rho_\Psi]\Pi)\\
+&=q_\Psi + \operatorname{Tr}([q_0\rho_0 - q_\Psi \rho_\Psi]\Pi) \\
+&=q_\Psi + \operatorname{Tr}(\Pi \,\Gamma) 
+\end{aligned}
+$$
+The Helstrom operator:
+$$
+\boxed{\;
+\Gamma := q_0 \rho_0 - q_\Psi \rho_\Psi
+\;}
+$$
+
+Write $\Gamma$ in its spectral decomposition:
+
+$$
+\Gamma=\sum_{i}\lambda_i |v_i\rangle\!\langle v_i|
+      =\underbrace{\sum_{\lambda_i>0}\lambda_i |v_i\rangle\!\langle v_i|}_{\displaystyle\Gamma_{+}}
+       \;-\;
+       \underbrace{\sum_{\lambda_j<0}|\lambda_j| |v_j\rangle\!\langle v_j|}_{\displaystyle\Gamma_{-}} ,
+$$
+so that $\Gamma_{+}\ge0,\;\Gamma_{-}\ge0$ and $\Gamma=\Gamma_{+}-\Gamma_{-}$.
+
+The task is to choose projection $\Pi$ on $\Gamma$ to maximize $\operatorname{Tr}(\Pi \Gamma)$, which is obviously the seggregation of positive eigenvalues. 
+$$
+\Pi = \Gamma_+ 
+$$
+$$
+\max_{0\le\Pi\le I}\;
+        \operatorname{Tr}\bigl(\Pi \,\Gamma\bigr)
+      =\!\!\sum_{\lambda_i>0}\!\!\lambda_i 
+$$
+
+**Trace norm** is called the 1-norm of its spectrum
+$$
+\boxed{\;
+\lVert\Gamma\rVert_1
+      =\sum_i|\lambda_i|
+      =\operatorname{Tr}\Gamma_{+}+\operatorname{Tr}\Gamma_{-}.
+\;}
+$$
+Choosing the optimal $\Pi_0 = \Gamma_+$ and using trace norm:
+$$
+\begin{aligned}
+P_{\text{succ}}^{\max}
+   &=q_\Psi+\operatorname{Tr}\Gamma_{+}  \\[2pt]
+   &=q_\Psi+\tfrac12\bigl(\lVert\Gamma\rVert_1+\operatorname{Tr}\Gamma\bigr) \\
+   &=q_\Psi+\tfrac12\bigl(\lVert\Gamma\rVert_1+(q_0 - q_\Psi)\bigr) \\
+   &=\tfrac12\bigl(\lVert\Gamma\rVert_1+1\bigr)
+\end{aligned}
+$$
+
 
 ## Trace Norm Algebra
 ### Singular(Non-negative) Value Decompostion
